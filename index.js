@@ -46,14 +46,13 @@ app.get("/posts", (req, res) => {
 });
 //CHALLENGE 2: GET a specific post by id
 app.get("/posts/:id", (req, res) => {
-  const id = pasrseInt(req.params.id);
+  const id = parseInt(req.params.id);
   const searchPost = posts.find((post) => post.id === id);
   res.json(searchPost);
 });
 
 //CHALLENGE 3: POST a new post
 app.post("/posts", (req,res) => {
-  console.log(req.body);
   const newPost = {
     id: posts.length + 1,
     title: req.body.title,
@@ -66,7 +65,16 @@ app.post("/posts", (req,res) => {
 })
 
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
+app.patch("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const findPost  = posts.find((post) => post.id === id);
+  findPost.content = req.body.content || findPost.content;
+  findPost.title = req.body.title || findPost.title;
+  findPost.author = req.body.author || findPost.author;
+  findPost.date = new Date();
 
+  res.json(findPost);
+});
 
 //CHALLENGE 5: DELETE a specific post by providing the post id.
 
