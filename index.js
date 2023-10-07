@@ -77,6 +77,18 @@ app.patch("/posts/:id", (req, res) => {
 });
 
 //CHALLENGE 5: DELETE a specific post by providing the post id.
+app.delete("/posts/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const searchIndex = posts.findIndex((post) => post.id === id);
+    if(searchIndex > -1){
+      posts.splice(searchIndex, 1);
+      res.json({message: "Post Deleted."});
+    } else{
+      res
+        .status(404)
+        .json({message: "Not Found"});
+    }
+});
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
